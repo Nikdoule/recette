@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Recettes de tartes</h1>
+    <form class="ml-auto mr-auto flex-row d-flex">
+        <input class="form-control mr-sm-0 col-lg-10" type="text" placeholder="Cherche une tarte" />
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+    <div class="container2 d-flex justify-content-around flex-wrap">
+        {% for recette in recettes %}
+        <a class="item" href="/recipe/{{recette.id}}">
+            <div class="recette__column">
+                <img class="img__petite" src="{{ recette.image }}" alt="">
+                <div class="m_cartouche"></div>
+                <h3 class="titre__carte">{{ recette.titre }}</h3>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

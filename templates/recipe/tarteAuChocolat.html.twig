@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tarte au chocolat{% endblock %}
+
+{% block body %}
+
+
+<!--<div class="recette__page col-lg-8 col-sm-12 ml-auto mr-auto mt-5">
+    <h2 class="m-auto">{{ recettes.titre }}</h2>
+    <img class="img__grande ml-auto mr-auto mt-5 col-lg-8 col-sm-12" src="{{ recettes.image }}" alt="">
+    <div class="d-flex">
+        <div class="w-25 ml-3">
+            <h4>Temps de préparation</h4>
+            <button type="button" class="btn btn-success col-sm-8 mb-3">{{ recettes.tempsDePreparation }} min</button>
+            <h4>Temps de Cuisson</h4>
+            <button type="button" class="btn btn-success col-sm-8 mb-3">{{ recettes.tempsDeCuisson }} min</button>
+            <h4>Ingrédients</h4>
+            <div class="d-flex flex-column">
+                {% for ingre in recettes.ingredient %}
+                <button type="button" class="btn btn-success col-sm-8 mb-3">{{ ingre.nom }}
+                    {{ ingre.quantite }}{{unites[1]}}</button>
+                {% endfor %}
+
+            </div>
+            </button>
+            <h4>Prix</h4>
+            <button type="button" class="btn btn-success col-sm-8 mb-3">{{ recettes.prix }} Euros</button>
+            <h4>Utensiles</h4>
+            <div class="d-flex flex-column">
+                {% for outil in recettes.ustensile %}
+                <button type="button" class="btn btn-success col-sm-8 mb-3">{{ outil.nom }}</button>
+                {% endfor %}
+            </div>
+            <h4>Avis</h4>
+            <button type="button" class="btn btn-success col-sm-8 mb-3">{{recettes.avi}}</button>
+
+        </div>
+        <article class="w-75 mt-5">
+            {{recettes.etape |raw}}
+        </article>
+    </div>
+</div>-->
+<div class="container">
+    <h1 class="m-auto">{{ recettes.titre }}</h1>
+    <form class="ml-auto mr-auto flex-row d-flex">
+        <input class="form-control mr-sm-0 col-lg-10" type="text" placeholder="Cherche une tarte" />
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+    <div class="container2 d-flex justify-content-around flex-wrap">
+        <img class="img__grande mt-5 col-lg-8 col-sm-12" src="{{ recettes.image }}" alt="">
+        <div class="d-flex">
+            <div class="w-25 ml-3">
+                <h4>Temps de préparation</h4>
+                <button type="button" class="btn btn-success col-sm-8 mb-3">{{ recettes.tempsDePreparation }}
+                    min</button>
+                <h4>Temps de Cuisson</h4>
+                <button type="button" class="btn btn-success col-sm-8 mb-3">{{ recettes.tempsDeCuisson }} min</button>
+                <h4>Ingrédients</h4>
+                <div class="d-flex flex-column">
+                    {% for ingre in recettes.ingredient %}
+                    <button type="button" class="btn btn-success col-sm-8 mb-3">{{ ingre.nom }}
+                        {{ ingre.quantite }}{{unites[1]}}</button>
+                    {% endfor %}
+
+                </div>
+                </button>
+                <h4>Prix</h4>
+                <button type="button" class="btn btn-success col-sm-8 mb-3">{{ recettes.prix }} Euros</button>
+                <h4>Utensiles</h4>
+                <div class="d-flex flex-column">
+                    {% for outil in recettes.ustensile %}
+                    <button type="button" class="btn btn-success col-sm-8 mb-3">{{ outil.nom }}</button>
+                    {% endfor %}
+                </div>
+                <h4>Avis</h4>
+                <button type="button" class="btn btn-success col-sm-8 mb-3">{{recettes.avi}}</button>
+
+            </div>
+            <article class="w-75 mt-5">
+                {{recettes.etape |raw}}
+            </article>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

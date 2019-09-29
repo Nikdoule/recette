@@ -1,0 +1,79 @@
+.navbar {
+    font-size: 18px;
+    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-weight: 700;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: -10px;
+}
+.recette__column{
+    display: flex;
+    flex-direction: column;
+    width:300px;
+    height: 300px;
+}
+.recette__page{
+    display: flex;
+    flex-direction: column;
+}
+.img__grande{
+    border-radius: 50px;
+    width: 100%;
+
+}
+.container2{
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    max-width: 1040px;
+    position: relative;
+    top: 100px;
+}
+.container{
+    position: relative;
+    top: 100px;
+    max-width: 1040px;
+}
+.item{
+    background-color: white;
+    margin-bottom: 20px;
+    box-shadow: 1px 0px 10px gray;
+    height: 350px;
+    border-radius: 10px;
+    text-decoration: none !important;
+}
+.img__petite{
+    border-radius: 10px 10px 0 0;
+}
+.titre__carte{
+    position: relative;
+    top: 20px;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+}
+h1{
+    text-align: center;
+    font-family: 'Lobster', cursive;
+    
+}
+.m_cartouche{
+    background-image: url(https://static.afcdn.com/relmrtn/Front/PageType/marmitonHomepage/assets/nuage.svg), none;
+    background-size: 20px 10px;
+    background-repeat: repeat-x;
+    position: absolute;
+    margin-top: 251px;
+    height: 10px;
+    width: 300px;
+    z-index: 1000;
+}
+.form-control{
+    border-radius: 10px 0px 0px 10px; 
+}
+.btn-secondary{
+    border-radius: 0px 5px 5px 0px;
+}
+p{
+    font-size: 1.3rem;
+}
+
