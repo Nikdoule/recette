@@ -18,7 +18,6 @@
     flex-direction: column;
 }
 .img__grande{
-    border-radius: 50px;
     width: 100%;
 
 }
@@ -29,6 +28,7 @@
     max-width: 1040px;
     position: relative;
     top: 100px;
+    border-radius: 10px;
 }
 .container{
     position: relative;
@@ -52,6 +52,7 @@
     text-align: center;
     font-family: 'Pacifico', cursive;
 }
+
 h1{
     text-align: center;
     font-family: 'Lobster', cursive;
@@ -73,7 +74,26 @@ h1{
 .btn-secondary{
     border-radius: 0px 5px 5px 0px;
 }
-p{
+.btn{
+    padding: 3px;
     font-size: 1.3rem;
 }
-
+p{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.1rem;
+    color: rgb(92, 92, 92);
+}
+h4{
+    font-size: 1.2rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    
+}
+.badge{
+    margin-top: 10px;
+    font-size: 1.3rem;
+}
+.required{
+    font-weight: bold;
+    font-size: 2rem;
+    color: rgb(255, 102, 0)
+}
