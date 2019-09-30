@@ -7,3 +7,5 @@ easy_admin:
         - App\Entity\Etapes
         - App\Entity\Ustensiles
         - App\Entity\Ingredients
+        - App\Entity\User
+

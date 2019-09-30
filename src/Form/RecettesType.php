@@ -17,7 +17,7 @@ class RecettesType extends AbstractType
             ->add('tempsDePreparation')
             ->add('tempsDeCuisson')
             ->add('prix')
-            ->add('etape')
+            ->add('etapes')
             ->add('ustensile')
             ->add('ingredient')
             ->add('avi')

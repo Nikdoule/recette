@@ -24,7 +24,12 @@ class Etapes
     private $contenu;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recettes", mappedBy="etape")
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $spot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recettes", inversedBy="etapes")
      */
     private $recettes;
 
@@ -32,11 +37,7 @@ class Etapes
         
         return $this->contenu;
    }
-    public function __construct()
-    {
-        $this->recettes = new ArrayCollection();
-    }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -54,33 +55,26 @@ class Etapes
         return $this;
     }
 
-    /**
-     * @return Collection|Recettes[]
-     */
-    public function getRecettes(): Collection
+    public function getSpot(): ?int
     {
-        return $this->recettes;
+        return $this->spot;
     }
 
-    public function addRecette(Recettes $recette): self
+    public function setSpot(?int $spot): self
     {
-        if (!$this->recettes->contains($recette)) {
-            $this->recettes[] = $recette;
-            $recette->setEtape($this);
-        }
+        $this->spot = $spot;
 
         return $this;
     }
 
-    public function removeRecette(Recettes $recette): self
+    public function getRecettes(): ?Recettes
     {
-        if ($this->recettes->contains($recette)) {
-            $this->recettes->removeElement($recette);
-            // set the owning side to null (unless already changed)
-            if ($recette->getEtape() === $this) {
-                $recette->setEtape(null);
-            }
-        }
+        return $this->recettes;
+    }
+
+    public function setRecettes(?Recettes $recettes): self
+    {
+        $this->recettes = $recettes;
 
         return $this;
     }

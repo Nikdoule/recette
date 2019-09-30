@@ -36,6 +36,15 @@
                 </li>
             </ul>
         </div>
+
+        {% if app.user %}
+            <div class="badge badge-dark">
+
+                {{ app.user.name }}
+                
+            </div>
+        {% endif %}
+        
     </nav>
     
 </body>

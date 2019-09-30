@@ -43,10 +43,7 @@ class Recettes
      */
     private $prix;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etapes", inversedBy="recettes")
-     */
-    private $etape;
+   
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Ustensiles", inversedBy="recettes")
@@ -67,12 +64,18 @@ class Recettes
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="recettes")
      */
     private $tag;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Etapes", mappedBy="recettes")
+     */
+    private $etapes;
     
     public function __construct()
     {
         $this->ustensile = new ArrayCollection();
         $this->ingredient = new ArrayCollection();
         $this->tag = new ArrayCollection();
+        $this->etapes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,18 +139,6 @@ class Recettes
     public function setPrix(int $prix): self
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getEtape(): ?Etapes
-    {
-        return $this->etape;
-    }
-
-    public function setEtape(?Etapes $etape): self
-    {
-        $this->etape = $etape;
 
         return $this;
     }
@@ -237,6 +228,42 @@ class Recettes
     {
         if ($this->tag->contains($tag)) {
             $this->tag->removeElement($tag);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * @return Collection|Etapes[]
+     */
+    public function getEtapes(): Collection
+    {
+        return $this->etapes;
+    }
+
+    public function addEtape(Etapes $etape): self
+    {
+        if (!$this->etapes->contains($etape)) {
+            $this->etapes[] = $etape;
+            $etape->setRecettes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtape(Etapes $etape): self
+    {
+        if ($this->etapes->contains($etape)) {
+            $this->etapes->removeElement($etape);
+            // set the owning side to null (unless already changed)
+            if ($etape->getRecettes() === $this) {
+                $etape->setRecettes(null);
+            }
         }
 
         return $this;

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190928160130 extends AbstractMigration
+final class Version20190930130500 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,21 +22,15 @@ final class Version20190928160130 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
 
-        $this->addSql('DROP INDEX UNIQ_4B60114FEC4A74AB');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__ingredients AS SELECT id, unite_id, nom, quantite FROM ingredients');
-        $this->addSql('DROP TABLE ingredients');
-        $this->addSql('CREATE TABLE ingredients (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, unite_id INTEGER DEFAULT NULL, nom VARCHAR(255) NOT NULL COLLATE BINARY, quantite INTEGER NOT NULL, CONSTRAINT FK_4B60114FEC4A74AB FOREIGN KEY (unite_id) REFERENCES unites (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO ingredients (id, unite_id, nom, quantite) SELECT id, unite_id, nom, quantite FROM __temp__ingredients');
-        $this->addSql('DROP TABLE __temp__ingredients');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_4B60114FEC4A74AB ON ingredients (unite_id)');
-        $this->addSql('DROP INDEX IDX_EB48E72C4A8CA2AD');
+        $this->addSql('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles CLOB NOT NULL --(DC2Type:json)
+        , password VARCHAR(255) NOT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON user (email)');
         $this->addSql('DROP INDEX IDX_EB48E72CDBD6CC98');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__recettes AS SELECT id, etape_id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM recettes');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__recettes AS SELECT id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM recettes');
         $this->addSql('DROP TABLE recettes');
-        $this->addSql('CREATE TABLE recettes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, etape_id INTEGER DEFAULT NULL, avi_id INTEGER DEFAULT NULL, titre VARCHAR(255) NOT NULL COLLATE BINARY, image VARCHAR(255) NOT NULL COLLATE BINARY, temps_de_preparation INTEGER NOT NULL, temps_de_cuisson INTEGER NOT NULL, prix INTEGER NOT NULL, CONSTRAINT FK_EB48E72C4A8CA2AD FOREIGN KEY (etape_id) REFERENCES etapes (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_EB48E72CDBD6CC98 FOREIGN KEY (avi_id) REFERENCES avis (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO recettes (id, etape_id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix) SELECT id, etape_id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM __temp__recettes');
+        $this->addSql('CREATE TABLE recettes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, avi_id INTEGER DEFAULT NULL, titre VARCHAR(255) NOT NULL COLLATE BINARY, image VARCHAR(255) NOT NULL COLLATE BINARY, temps_de_preparation INTEGER NOT NULL, temps_de_cuisson INTEGER NOT NULL, prix INTEGER NOT NULL, CONSTRAINT FK_EB48E72CDBD6CC98 FOREIGN KEY (avi_id) REFERENCES avis (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO recettes (id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix) SELECT id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM __temp__recettes');
         $this->addSql('DROP TABLE __temp__recettes');
-        $this->addSql('CREATE INDEX IDX_EB48E72C4A8CA2AD ON recettes (etape_id)');
         $this->addSql('CREATE INDEX IDX_EB48E72CDBD6CC98 ON recettes (avi_id)');
         $this->addSql('DROP INDEX IDX_10BA87463E2ED6D6');
         $this->addSql('DROP INDEX IDX_10BA8746E470D56B');
@@ -65,6 +59,20 @@ final class Version20190928160130 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__recettes_tag');
         $this->addSql('CREATE INDEX IDX_7D386273E2ED6D6 ON recettes_tag (recettes_id)');
         $this->addSql('CREATE INDEX IDX_7D38627BAD26311 ON recettes_tag (tag_id)');
+        $this->addSql('DROP INDEX UNIQ_4B60114FEC4A74AB');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__ingredients AS SELECT id, unite_id, nom, quantite FROM ingredients');
+        $this->addSql('DROP TABLE ingredients');
+        $this->addSql('CREATE TABLE ingredients (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, unite_id INTEGER DEFAULT NULL, nom VARCHAR(255) NOT NULL COLLATE BINARY, quantite INTEGER NOT NULL, CONSTRAINT FK_4B60114FEC4A74AB FOREIGN KEY (unite_id) REFERENCES unites (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO ingredients (id, unite_id, nom, quantite) SELECT id, unite_id, nom, quantite FROM __temp__ingredients');
+        $this->addSql('DROP TABLE __temp__ingredients');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_4B60114FEC4A74AB ON ingredients (unite_id)');
+        $this->addSql('DROP INDEX IDX_E3443E173E2ED6D6');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__etapes AS SELECT id, recettes_id, contenu, spot FROM etapes');
+        $this->addSql('DROP TABLE etapes');
+        $this->addSql('CREATE TABLE etapes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recettes_id INTEGER DEFAULT NULL, contenu CLOB NOT NULL COLLATE BINARY, spot INTEGER DEFAULT NULL, CONSTRAINT FK_E3443E173E2ED6D6 FOREIGN KEY (recettes_id) REFERENCES recettes (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO etapes (id, recettes_id, contenu, spot) SELECT id, recettes_id, contenu, spot FROM __temp__etapes');
+        $this->addSql('DROP TABLE __temp__etapes');
+        $this->addSql('CREATE INDEX IDX_E3443E173E2ED6D6 ON etapes (recettes_id)');
     }
 
     public function down(Schema $schema) : void
@@ -72,6 +80,14 @@ final class Version20190928160130 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
 
+        $this->addSql('DROP TABLE user');
+        $this->addSql('DROP INDEX IDX_E3443E173E2ED6D6');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__etapes AS SELECT id, recettes_id, contenu, spot FROM etapes');
+        $this->addSql('DROP TABLE etapes');
+        $this->addSql('CREATE TABLE etapes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recettes_id INTEGER DEFAULT NULL, contenu CLOB NOT NULL, spot INTEGER DEFAULT NULL)');
+        $this->addSql('INSERT INTO etapes (id, recettes_id, contenu, spot) SELECT id, recettes_id, contenu, spot FROM __temp__etapes');
+        $this->addSql('DROP TABLE __temp__etapes');
+        $this->addSql('CREATE INDEX IDX_E3443E173E2ED6D6 ON etapes (recettes_id)');
         $this->addSql('DROP INDEX UNIQ_4B60114FEC4A74AB');
         $this->addSql('CREATE TEMPORARY TABLE __temp__ingredients AS SELECT id, unite_id, nom, quantite FROM ingredients');
         $this->addSql('DROP TABLE ingredients');
@@ -79,14 +95,12 @@ final class Version20190928160130 extends AbstractMigration
         $this->addSql('INSERT INTO ingredients (id, unite_id, nom, quantite) SELECT id, unite_id, nom, quantite FROM __temp__ingredients');
         $this->addSql('DROP TABLE __temp__ingredients');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_4B60114FEC4A74AB ON ingredients (unite_id)');
-        $this->addSql('DROP INDEX IDX_EB48E72C4A8CA2AD');
         $this->addSql('DROP INDEX IDX_EB48E72CDBD6CC98');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__recettes AS SELECT id, etape_id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM recettes');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__recettes AS SELECT id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM recettes');
         $this->addSql('DROP TABLE recettes');
-        $this->addSql('CREATE TABLE recettes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, etape_id INTEGER DEFAULT NULL, avi_id INTEGER DEFAULT NULL, titre VARCHAR(255) NOT NULL, image VARCHAR(255) NOT NULL, temps_de_preparation INTEGER NOT NULL, temps_de_cuisson INTEGER NOT NULL, prix INTEGER NOT NULL)');
-        $this->addSql('INSERT INTO recettes (id, etape_id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix) SELECT id, etape_id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM __temp__recettes');
+        $this->addSql('CREATE TABLE recettes (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, avi_id INTEGER DEFAULT NULL, titre VARCHAR(255) NOT NULL, image VARCHAR(255) NOT NULL, temps_de_preparation INTEGER NOT NULL, temps_de_cuisson INTEGER NOT NULL, prix INTEGER NOT NULL)');
+        $this->addSql('INSERT INTO recettes (id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix) SELECT id, avi_id, titre, image, temps_de_preparation, temps_de_cuisson, prix FROM __temp__recettes');
         $this->addSql('DROP TABLE __temp__recettes');
-        $this->addSql('CREATE INDEX IDX_EB48E72C4A8CA2AD ON recettes (etape_id)');
         $this->addSql('CREATE INDEX IDX_EB48E72CDBD6CC98 ON recettes (avi_id)');
         $this->addSql('DROP INDEX IDX_33E6DB8E3E2ED6D6');
         $this->addSql('DROP INDEX IDX_33E6DB8E3EC4DCE');
